@@ -7,7 +7,7 @@ function printNumbers(numbers) {
 }
 
 // Q: Given an array of numbers, what is the space complexity of this function?
-// ANSWER:
+// ANSWER:O(n)
 
 
 // 2) You are challenged to find the 4th element of the array, and you came up with this solution:
@@ -27,7 +27,7 @@ function findFourth(numbers) {
 }
 
 // Q: Given an array of numbers, what is the space complexity of this function?
-// ANSWER:
+// ANSWER:O(n)
 
 
 // 3) -------------------------------------------------------
@@ -37,7 +37,7 @@ function printA() {
     }
 }
 // Q: What is the space complexity of this function?
-// ANSWER:
+// ANSWER:O(n)
 
 
 // 4) -------------------------------------------------------
@@ -47,7 +47,7 @@ function printB(number) {
   }
 }
 // Q: What is the space complexity of the function?
-// ANSWER:
+// ANSWER:O(n)
 
 
 // 5) -------------------------------------------------------
@@ -59,7 +59,7 @@ function printC(num, arr) {
   }
 }
 // Q: What is the space complexity of the function?
-// ANSWER:
+// ANSWER:O(n^2)
 
 
 // 6) -------------------------------------------------------
@@ -72,7 +72,7 @@ function nested(numbers) {
 }
 
 // Q: What is the space complexity of this function?
-// ANSWER:
+// ANSWER:O(n^2)
 
 
 // 7) -------------------------------------------------------
@@ -83,7 +83,7 @@ let newNumbersA = numbers.filter((num) => {
 })
 
 // Q: What is the space complexity of the filter higher-order function?
-// ANSWER:
+// ANSWER:O(n)
 
 
 // 8) -------------------------------------------------------
@@ -92,7 +92,7 @@ let newNumbersB = numbers.map((num) => {
   return num * 3
 })
 // Q: What is the space complexity of the map higher-order function?
-// ANSWER:
+// ANSWER:O(n)
 
 
 // 9) -------------------------------------------------------
@@ -109,7 +109,7 @@ function arrInception(parentArr) {
   }
 }
 // Q: What is the space complexity of this function?
-// ANSWER:
+// ANSWER:O(n^2)
 
 
 // 10) You are challenged to find the squared value of each number in an array. This is not the best solution, but it is what you come up with anyway...
@@ -127,12 +127,21 @@ function getNumbersSquared(numbers) {
 }
 
 // Q: What is the space complexity of this function?
-// ANSWER:
+// ANSWER:O(n)
 
 
 // Q: Is it possible to improve this function's space complexity? If it is, write a new function below.
-// ANSWER:
+// ANSWER:The complexity stays the same but the space used is lowered in this manner
 
+function getNumbersSquared2(numbers) {
+  let answers = []
+
+  for (let i = 0; i < numbers.length; i++) {
+    let squaredValue = numbers[i] * numbers[i]
+    answers.push(squaredValue)
+  }
+  return answers
+}
 
 // 11) Here are two functions that you came up with to count how many of each letter is in a given string and return an object with the individual counts: 
 
@@ -196,16 +205,16 @@ function countLettersRoundTwo(str) {
 
 
 // Q: Do these functions have the same space complexity?
-// ANSWER:
+// ANSWER:no
 
 
 // Q: What is the space complexity of each? 
-// ANSWER - countLetters:
-// ANSWER - countLettersRoundTwo:
+// ANSWER - countLetters:O(n^2)
+// ANSWER - countLettersRoundTwo:O(n)
 
 
 // Q: Explain how you came to your conclusions about the space complexity of each function. 
-// ANSWER: 
+// ANSWER: they both have a for loop but with the first function calls a new function in that for loop
 
 
 // 12) Memoization
@@ -240,6 +249,24 @@ function countLettersRoundTwo(str) {
 
 // CODE HERE 
 
+class factorial{
+  constructor(){
+    this.cache = {}
+  }
+
+  calcFac(num){
+    if(num in this.cache){
+      return this.cache[num];
+    }
+
+    let answer = 1;
+    for(let i = num; i > 0; i--){
+      answer *= i
+    }
+    this.cache[num] = answer;
+    return answer
+  }
+}
 
 /* 
   We want to test a non-memoized version of this too, 
@@ -251,6 +278,14 @@ function countLettersRoundTwo(str) {
 
 // function noCacheCalcFac(num) {
     //CODE HERE
+
+function noCacheCalcFac(num){
+  let answer = 1;
+  for(let i = num; i > 0; i--){
+    answer *= i
+  }
+  return answer
+}
 // }
 
 /*
@@ -260,20 +295,20 @@ function countLettersRoundTwo(str) {
   (run using 'node index.js' in the terminal)
 */
 
-const myFac = // CREATE A NEW INSTANCE OF THE FACTORIAL CLASS
+const myFac = new factorial();
 
 console.time("not memoized factorial");
-console.log(/* CALL NOCACHECALCFAC PASSING IN 8*/)
-console.log(/* CALL NOCACHECALCFAC PASSING IN 8*/)
-console.log(/* CALL NOCACHECALCFAC PASSING IN 8*/)
-console.log(/* CALL NOCACHECALCFAC PASSING IN 8*/)
+console.log(noCacheCalcFac(8))
+console.log(noCacheCalcFac(8))
+console.log(noCacheCalcFac(8))
+console.log(noCacheCalcFac(8))
 console.timeEnd("not memoized factorial");
 
 console.time("memoized factorial");
-console.log(/* CALL THE CALCFAC METHOD OFF OF MYFAC 8*/)
-console.log(/* CALL THE CALCFAC METHOD OFF OF MYFAC 8*/)
-console.log(/* CALL THE CALCFAC METHOD OFF OF MYFAC 8*/)
-console.log(/* CALL THE CALCFAC METHOD OFF OF MYFAC 8*/)
+console.log(myFac.calcFac(8))
+console.log(myFac.calcFac(8))
+console.log(myFac.calcFac(8))
+console.log(myFac.calcFac(8))
 console.timeEnd("memoized factorial");
 
 // 13) Memoization Challenge
@@ -286,7 +321,25 @@ console.timeEnd("memoized factorial");
   we've covered or come up with your own)
 */
 
-// CODE HERE
+// CODE 
+
+class allHalves{
+  constructor(){
+    this.cache = {}
+  }
+
+  calcHalf(num){
+    if(num in this.cache){
+      return this.cache[num];
+    }
+
+    if(num % 2 !== 0) {
+    return num
+    }
+    
+    return this.cache[num] = this.calcHalf(num / 2)
+  }
+}
 
 /*
     Copy and paste the method outside the class and
@@ -296,27 +349,37 @@ console.timeEnd("memoized factorial");
 
 // CODE HERE 
 
+function noCacheCalcHalf(num){
+  if(num % 2 !== 0) {
+  return num
+  }
+  return noCacheCalcHalf(num / 2)
+}
+
 /*
     Before you see how much time they take, make a 
     guess as to if one will be faster.
 */
 
-// ANSWER: 
+// ANSWER: the class
 
 // Now fill this out and run your file
 
 // CREATE A NEW INSTANCE OF YOUR CLASS
 
+const myHalves = new allHalves()
+
 console.time("not memoized function time");
-console.log(/* CALL YOUR NONCACHE FN*/)
-console.log(/* CALL YOUR NONCACHE FN*/)
-console.log(/* CALL YOUR NONCACHE FN*/)
-console.log(/* CALL YOUR NONCACHE FN*/)
+console.log(noCacheCalcHalf(128))
+console.log(noCacheCalcHalf(128))
+console.log(noCacheCalcHalf(128))
+console.log(noCacheCalcHalf(128))
 console.timeEnd("not memoized function time");
 
 console.time("memoized function time");
-console.log(/* CALL THE METHOD FROM YOUR CLASS*/)
-console.log(/* CALL THE METHOD FROM YOUR CLASS*/)
-console.log(/* CALL THE METHOD FROM YOUR CLASS*/)
-console.log(/* CALL THE METHOD FROM YOUR CLASS*/)
+console.log(myHalves.calcHalf(128))
+console.log(myHalves.calcHalf(128))
+console.log(myHalves.calcHalf(128))
+console.log(myHalves.calcHalf(128))
 console.timeEnd("memoized function time");
+
